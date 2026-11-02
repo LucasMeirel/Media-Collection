@@ -1,24 +1,37 @@
-var id = [];
+const maximo_filmes = 15;
+var contagem_filmes = 0
 
 const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MjQ3Yzg0MGIyNGJkYWE1ZDNmZDdhNWM0NGY4N2MzZSIsIm5iZiI6MTc5MjAwMzgwNy4xMjcsInN1YiI6IjZhY2ZjZWRmNGYzZmQ4YjUxNGYxN2QyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.piNpMwfXjl6IuzjMX5TqsCctkio2NJqaCw0prdu5hww'
+    Authorization: '[token]'
   }
 };
 
 async function buscar(){
     msg.innerHTML = '';
+    contagem_filmes = 0;
     const query = ipt_filme.value;
 
     const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}`, options);
     
     const data = await response.json()
+    const pag = data.total_pages;
 
-    for (const movie of data.results){
-        msg.innerHTML += await buscar_releases(movie.id) 
+    for(var pagina = 1; pagina <= pag; pagina++){
+        const resposta = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&page=${pagina}&include_adult=false`, options)
+        const resposta_data = await resposta.json();
+        resposta_data.results.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
+
+    for (const movie of resposta_data.results){
+        if (contagem_filmes < maximo_filmes){
+            msg.innerHTML += await buscar_releases(movie.id) 
+        }
     };
+    }
+
+
 }
 
 async function buscar_releases(movie){
@@ -46,13 +59,19 @@ async function exibir_imagens(movie) {
     const imagem = await fetch (`https://api.themoviedb.org/3/movie/${movie}`, options);
     const response = await imagem.json();
     const caminho_imagem = response.poster_path;
+    const title = response.title;
+    console.log(title)
 
     if(!caminho_imagem){
         return ''
+    }else{
+        contagem_filmes++
+        return `<div class="movie_div"> <img class="poster" src="https://image.tmdb.org/t/p/original/${caminho_imagem}" <label>${title}</label> </div>`
     }
     
-    return `<img class="poster" src="https://image.tmdb.org/t/p/original/${caminho_imagem}" alt="">`
+
 }
+
 
 // buscar();
 /* const resposta_tudo = await fetch(`https://api.themoviedb.org/3/discover/movie`, options);
