@@ -6,11 +6,11 @@ var mySqlConfig = {
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT,
+    multipleStatements: true
 };
 
 function executar(instrucao) {
-    console.log(mySqlConfig);
     return new Promise(function (resolve, reject) {
         var conexao = mysql.createConnection(mySqlConfig);
         conexao.connect();
