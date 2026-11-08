@@ -1,44 +1,109 @@
 body{
+    font-family: 'Archivo', sans-serif;
     box-sizing: border-box;
     margin: 0;
 }
 
+.search_main{
+    
+    background-image: 
+    repeating-linear-gradient(0deg, #ffffff12 0 1px, transparent 1px 5px),
+    radial-gradient(ellipse at 50% 30%, #636262, #0b0b0b 75%);
+}
+
 .poster{
-    width: 300px;
-    height: 500px;
+    width: 205px;
+    height: 285px;
     border-style: solid;
     border-width: 5px 8px 5px 0px;
     border-radius: 5px 10px 10px 5px;
+    box-shadow: 5px 4px 14px rgba(0, 0, 0, 0.603);
 }
 
 .poster:hover{
     outline: 5px solid black;
     cursor: pointer;
-    position: +50px;
 }
 
 .poster_grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
     justify-content: center;
-    row-gap: 20px;
-    column-gap: 10px;
-    padding: 20px;
-    width: 1500px;
+    grid-template-columns: repeat(8, 215px);
+    row-gap: 35px;
+    column-gap: 20px;
+    padding: 30px;
     box-sizing: border-box;
 }
 
 .movie_div{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: flex-start;
     flex-direction: column;
+    gap: 10px;
+}
+
+.movie_title{
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .center_main{
+    border-style: solid;
+    border-width: 5px 0px 5px 0px;
+    -webkit-box-shadow: inset 0px 0px 50px -8px rgba(0,0,0,0.75); 
+    box-shadow: inset -0px 0px 50px -8px rgba(0,0,0,0.75);
+    background-color: #D9D9D9;
+}
+
+.button_line{
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
+    justify-content: space-between;
+
+    padding: 15px 20px 0px 15px;
+}
+
+.basic_button{
+    border-width: 5px 5px 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+    font-weight: 500;
+    background-color: #D9D9D9;
+}
+
+.attached_button{
+    border-width: 5px 5px 0px 5px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.create_account{
+    border-width: 5px 5px 5px 5px;
+    border-radius: 10px 10px 10px 10px;
+    background-color: #8DCBBC;
+    font-weight: 700;
+    margin-left: 15px;
+}
+
+.selected{
+    text-decoration: underline;
+}
+
+.center{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.button_block button{
+    font-size: 18px;
+    border-style: solid;
+    height:fit-content;
+    padding: 4px 25px 4px 25px;
+}
+
+.logo{
+    height: 70px;
+    width: 120px;
+    margin-right: 30px;
 }

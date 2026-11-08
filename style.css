@@ -8,9 +8,9 @@ body{
 }
 
 .main{
-    background-image: url(img/Background1.jpg);
-    background-size: cover;
-    background-repeat: repeat-y;
+    background-image:
+        repeating-linear-gradient(0deg, #ffffff12 0 1px, transparent 1px 5px),
+        radial-gradient(ellipse at 50% 30%, #636262, #0b0b0b 75%);
 }
 
 .title{
