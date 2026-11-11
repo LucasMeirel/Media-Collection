@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/apiFetch.js"></script>
+    <link rel="stylesheet" href="css/style_search.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <title>Search</title>
+</head>
+<body class="search_main">
+            <div class="button_line">
+            <div class="left">
+                <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
+                <a href="Search.html"><button class="selected attached_button">Films</button></a>
+                <button class="attached_button">My Collection</button>
+                <button class="attached_button">Wishlist</button>
+            </div>
+            <div class="right">
+                <a href="login.html"><button class="basic_button"> Sign in </button></a>
+                <a href="Create.html"><button class="create_account"> Create Account </button></a>
+            </div>
+            <input onkeyup="(event.key === 'Enter') ? buscar() : undefined;" type="text" id="ipt_filme" placeholder="Type your movie">
+            </div>
+        </div>
+        <section class="center">
+            <main class="movie_box">
+                <div class="poster_grid" id="msg">
+                    <div class="movie_div"> <img class="poster"> <label class="movie_title">titulo</label> </div>
+                </div>
+            </main>
+        </section>
+
+    <!-- <button onclick="buscar()">Procurar o Filme</button><br><br> -->
+</body>
+<script>
+</script>
+</html>
