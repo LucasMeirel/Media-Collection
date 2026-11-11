@@ -1,4 +1,5 @@
-const maximo_filmes = 16;
+const maximo_filmes = 12;
+const maximo_tentativa = 40;
 var contagem_filmes = 0
 var tentativa = 0
 
@@ -21,10 +22,10 @@ async function buscar(){
     const data = await response.json()
     const pag = data.total_pages;
 
-    for(var pagina = 1; pagina <= pag && tentativa < 30; pagina++){
+    for(var pagina = 1; pagina <= pag && tentativa < maximo_tentativa; pagina++){
         const resposta = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&page=${pagina}&include_adult=false`, options)
         const resposta_data = await resposta.json();
-        resposta_data.results.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
+        // resposta_data.results.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
 
         for (const movie of resposta_data.results){
             tentativa ++

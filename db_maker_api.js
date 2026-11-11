@@ -1,6 +1,6 @@
 require("dotenv").config({ path: "./.env" });
-const { cadastrar } = require("./controllers/genreController.js")
-const { cadastrar_filme } = require("./controllers/movieController.js")
+const { cadastrar } = require("./src/controllers/genreController.js")
+const { cadastrar_filme } = require("./src/controllers/movieController.js")
 
 const options = {
     method: 'GET',

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/apiFetch.js"></script>
+  <link rel="stylesheet" href="css/style_search.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <title>Search</title>
+</head>
+
+<body class="search_main">
+  <div class="button_line">
+    <div class="left">
+      <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
+        <a href="Search.html"><button class="attached_button">Films</button></a>
+        <button class="attached_button">My Collection</button>
+        <button class="attached_button">Wishlist</button>
+    </div>
+    <div class="right">
+      <a href="login.html"><button class="basic_button"> Sign in </button></a>
+      <a href="Create.html"><button class="create_account"> Create Account </button></a>
+    </div>
+    <!-- <input onkeyup="(event.key === 'Enter') ? buscar() : undefined;" type="text" id="ipt_filme"> -->
+  </div>
+  <section class="center">
+    <main class="login_box center">
+      <div class="tv_message center">
+        <label for=""> Track the dvd's you got. Save those you still want. </label>
+      </div>
+      <div class="cadastro">
+        <label>Join Collect Physical!</label>
+        <section> E-mail: <br><input type="text" id="ipt_email" placeholder="E-mail"> </section>
+        <section> Username: <br><input type="text" id="ipt_username" placeholder="Username"> </section>
+        <section> Password: <br><input type="text" id="ipt_password" placeholder="Password"> </section>
+        <section> Confirm Password: <br><input type="text" id="ipt_password2" placeholder="Confirm your Password">
+        </section>
+        <div id="error_message"></div>
+        <button class="signup" onclick="cadastrar()"> Sign up </button>
+      </div>
+    </main>
+  </section>
+
+  <!-- <button onclick="buscar()">Procurar o Filme</button><br><br> -->
+</body>
+<script>
+  function cadastrar() {
+    var username = ipt_username.value;
+    var email = ipt_email.value;
+    var senha = ipt_password.value;
+    var confirmacao_senha = ipt_password2.value;
+
+    // Verificando se há algum campo em branco
+    if (
+      username == "" ||
+      email == "" ||
+      senha == "" ||
+      confirmacao_senha == ""
+    ) {
+      error_message.innerHTML =
+        "Todos os valores devem ser preenchidos";
+
+      return false;
+    }
+    else {
+      // Enviando o valor da nova input
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeServer: username,
+          emailServer: email,
+          senhaServer: senha
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+
+            fetch("/usuarios/autenticar", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                emailServer: email,
+                senhaServer: senha
+              })
+            })
+              .then(function (resposta) {
+                console.log("ESTOU NO THEN DO autenticar()!");
+
+                if (resposta.ok) {
+                  resposta.json().then(function (json) {
+
+                    // Cadastrando coleção
+                    cadastrar_colecao(json.id);
+
+                  });
+                } else {
+                  throw new Error("Erro ao realizar autenticação!");
+                }
+              })
+              .catch(function (erro) {
+                console.log(erro);
+              });
+
+          } else {
+            throw new Error("Houve um erro ao tentar realizar o cadastro!");
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+          error_message.innerHTML = erro.message;
+        });
+    }
+  }
+
+  function cadastrar_colecao(id) {
+    fetch("/usuarios/cadastrar_colecao", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idServer: id
+      }),
+    })
+
+      .then(function (resposta) {
+        if (!resposta.ok) {
+          throw new Error("Erro ao cadastrar coleção!");
+        }
+        else {
+
+          error_message.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            
+          setTimeout(() => {
+            window.location = "login.html";
+          }, 2000);
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+  }
+</script>
+
+</html>
