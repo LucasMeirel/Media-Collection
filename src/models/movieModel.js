@@ -1,14 +1,14 @@
-database = require("../database/config")
+var database = require("../database/config")
 const fs = require("fs");
 
-function cadastrar_filme(id, title, release_date, path, title_us, popularity) {
+function cadastrar_filme(id, title, release_date, path, path_us, title_us, popularity) {
     title = title.replace(/'/g, "\\'");
     title_us = title_us.replace(/'/g, "\\'");
     path = path.replace(/'/g, "\\'");
 
     var instrucaoSql = `
         INSERT IGNORE INTO filme VALUES(${id}, '${release_date}', ${popularity});
-        INSERT IGNORE INTO poster VALUES(${id}, '${path}', ${id});
+        INSERT IGNORE INTO poster(path, fk_filme, fk_regiao) VALUES('${path}', ${id}, 2),('${path_us}', ${id}, 1);
         INSERT IGNORE INTO titulo(titulo, fk_filme, fk_regiao) VALUES('${title_us}', ${id}, 1);
         INSERT IGNORE INTO titulo(titulo, fk_filme, fk_regiao) VALUES('${title}', ${id}, 2);
     `;

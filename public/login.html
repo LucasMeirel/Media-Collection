@@ -15,8 +15,8 @@
             <div class="left">
                 <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
                 <a href="Search.html"><button class="attached_button">Films</button></a>
-                <button class="attached_button">My Collection</button>
-                <button class="attached_button">Wishlist</button>
+                <a href="collection.html"><button class="attached_button">My Collection</button></a>
+                <button class="attached_button">Dashboard</button>
             </div>
             <div class="right">
                 <a href="login.html"><button class="basic_button"> Sign in </button></a>
@@ -33,7 +33,7 @@
                         <label>Welcome back!</label>
                             <section> E-mail: <br><input type="text" id="ipt_email" placeholder="E-mail"> </section>
                             <section> Password: <br><input type="text" id="ipt_password" placeholder="Password"> </section>
-                            <div id="error_message"></div>
+                            <div class="erro" id="error_message"></div>
                         <button class="signup" onclick="entrar()"> Sign In </button>
                     </div>
                 </main>
@@ -47,7 +47,6 @@
           var senhaVar = ipt_password.value;
 
           if (emailVar == "" || senhaVar == "") {
-              cardErro.style.display = "block"
               error_message.innerHTML = "Todos os dados devem ser preenchidos";
               return false;
           }
@@ -78,14 +77,15 @@
                       sessionStorage.NOME_USUARIO = json.nome;
                       sessionStorage.ID_USUARIO = json.id;
                       sessionStorage.COLECAO = json.colecao;
-
+                      
+                      error_message.innerHTML = "Seja bem vindo! Redirecionando para a dashboard...";
                       setTimeout(function () {
-                          window.location = "Search.html";
+                          window.location = "collection.html";
                       }, 1000); // apenas para exibir o loading
                   });
 
               } else {
-
+                  error_message.innerHTML = "Conta não encontrada"
                   console.log("Houve um erro ao tentar realizar o login!");
               }
 

@@ -17,8 +17,8 @@
     <div class="left">
       <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
         <a href="Search.html"><button class="attached_button">Films</button></a>
-        <button class="attached_button">My Collection</button>
-        <button class="attached_button">Wishlist</button>
+        <a href="collection.html"><button class="attached_button">My Collection</button></a>
+        <button class="attached_button">Dashboard</button>
     </div>
     <div class="right">
       <a href="login.html"><button class="basic_button"> Sign in </button></a>
@@ -38,7 +38,7 @@
         <section> Password: <br><input type="text" id="ipt_password" placeholder="Password"> </section>
         <section> Confirm Password: <br><input type="text" id="ipt_password2" placeholder="Confirm your Password">
         </section>
-        <div id="error_message"></div>
+        <div class="erro" id="error_message"></div>
         <button class="signup" onclick="cadastrar()"> Sign up </button>
       </div>
     </main>
@@ -65,6 +65,12 @@
 
       return false;
     }
+    else if(senha.length < 5){
+      error_message.innerHTML = "Senha deve conter pelo menos 5 dígitos"
+    }
+    else if(senha != confirmacao_senha){
+      error_message.innerHTML = "Senhas não coincidem"
+    }
     else {
       // Enviando o valor da nova input
       fetch("/usuarios/cadastrar", {
@@ -82,7 +88,7 @@
           console.log("resposta: ", resposta);
 
           if (resposta.ok) {
-
+            // Coleta de id do novo usuário para criar a coleção.
             fetch("/usuarios/autenticar", {
               method: "POST",
               headers: {
@@ -112,7 +118,7 @@
               });
 
           } else {
-            throw new Error("Houve um erro ao tentar realizar o cadastro!");
+            throw new Error("Email já cadastrado");
           }
         })
         .catch(function (erro) {

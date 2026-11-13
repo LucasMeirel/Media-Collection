@@ -10,25 +10,24 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <title>Search</title>
 </head>
-<body class="search_main">
+<body onload="search()" class="search_main">
             <div class="button_line">
             <div class="left">
                 <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
                 <a href="Search.html"><button class="selected attached_button">Films</button></a>
-                <button class="attached_button">My Collection</button>
-                <button class="attached_button">Wishlist</button>
+                <a href="collection.html"><button class="attached_button">My Collection</button></a>
+                <button class="attached_button">Dashboard</button>
             </div>
             <div class="right">
                 <a href="login.html"><button class="basic_button"> Sign in </button></a>
                 <a href="Create.html"><button class="create_account"> Create Account </button></a>
             </div>
-            <input onkeyup="(event.key === 'Enter') ? buscar() : undefined;" type="text" id="ipt_filme" placeholder="Type your movie">
+            <input onkeyup="(event.key === 'Enter') ? search() : undefined;" type="text" id="ipt_filme" placeholder="Type your movie">
             </div>
         </div>
         <section class="center">
-            <main class="movie_box">
+            <main class="movie_box" id="movie_box">
                 <div class="poster_grid" id="msg">
-                    <div class="movie_div"> <img class="poster"> <label class="movie_title">titulo</label> </div>
                 </div>
             </main>
         </section>
@@ -36,5 +35,39 @@
     <!-- <button onclick="buscar()">Procurar o Filme</button><br><br> -->
 </body>
 <script>
+    function search(){
+        var search = ipt_filme.value;
+
+        fetch("/movies/pesquisar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          searchServer: search,
+        })
+      })
+
+      .then((resposta) => {
+        if (resposta.ok){
+            resposta.json().then(json => {
+            msg.innerHTML = '';
+            for(let i = 0; i < json.length; i++){
+                //idFilme, path, titulo, dt_lancamento
+                let data = json[i].dt_lancamento
+                console.log(data)
+                console.log(':)')
+                console.log(json[i].idFilme)
+                msg.innerHTML += `<div class="movie_div" id="${json[i].idFilme}"> <img class="poster" src="https://image.tmdb.org/t/p/original/${json[i].path}"> <label class="movie_title">${json[i].titulo}</label> <label class="year">(${data.slice(0, 4)})</label> </div>`
+            }
+        })
+        }
+        else{
+            console.log(':(')
+            msg.innerHTML = ':('
+        }
+        })
+      }
+    
 </script>
 </html>

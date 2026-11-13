@@ -150,7 +150,7 @@ button:hover{
     width: 40%;
     height: 25px;
     right: 60px;
-    top:65px;
+    top:75px;
     padding: 0px 10px 0px 10px;
 }
 
@@ -210,4 +210,9 @@ button:hover{
     border-width: 2px;
     border-radius: 5px;
     background-color: #8DCBBC;
+}
+
+.erro{
+    color: red;
+    font-weight: bolder;
 }

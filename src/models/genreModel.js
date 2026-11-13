@@ -1,4 +1,4 @@
-database = require("../database/config")
+var database = require("../database/config")
 const fs = require("fs");
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql

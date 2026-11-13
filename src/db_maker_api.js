@@ -1,6 +1,6 @@
-require("dotenv").config({ path: "./.env" });
-const { cadastrar } = require("./src/controllers/genreController.js")
-const { cadastrar_filme } = require("./src/controllers/movieController.js")
+require("dotenv").config({ path: "../.env" });
+const { cadastrar } = require("./controllers/genreController.js")
+const { cadastrar_filme } = require("./controllers/movieController.js")
 
 const options = {
     method: 'GET',
@@ -69,14 +69,19 @@ async function buscar_filmes_br() {
                 const filme_us = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options)
                 const data_filmes_us = await filme_us.json();
                 const title_us = data_filmes_us.title;
-                
 
+
+                var caminho_imagem_us = data_filmes_us.poster_path;
                 var caminho_imagem = filme.poster_path;
 
                 console.log(caminho_imagem);
 
                 if (!caminho_imagem) {
                     caminho_imagem = '';
+                }
+
+                if(!caminho_imagem_us){
+                    caminho_imagem_us = '';
                 }
 
 
@@ -86,7 +91,7 @@ async function buscar_filmes_br() {
                 const popularidade = filme.popularity;
 
                 if (title_br) {
-                    cadastrar_filme(id, title_br, release_date, genre, caminho_imagem, title_us, popularidade);
+                    cadastrar_filme(id, title_br, release_date, genre, caminho_imagem, caminho_imagem_us, title_us, popularidade);
                 }
             }
         }
