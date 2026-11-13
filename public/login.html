@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/apiFetch.js"></script>
+    <script src="js/sessao.js"></script>
     <link rel="stylesheet" href="css/style_search.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com" rel="stylesheet">
     <title>Search</title>
 </head>
-<body class="search_main">
+<body onload="validarSessaoFilm()" class="search_main">
             <div class="button_line">
-            <div class="left">
+            <div id="left" class="left">
                 <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
                 <a href="Search.html"><button class="attached_button">Films</button></a>
-                <a href="collection.html"><button class="attached_button">My Collection</button></a>
-                <button class="attached_button">Dashboard</button>
+<!--                 <a href="collection.html"><button class="attached_button">My Collection</button></a>
+                <button class="attached_button">Dashboard</button> -->
             </div>
             <div class="right">
                 <a href="login.html"><button class="basic_button"> Sign in </button></a>
