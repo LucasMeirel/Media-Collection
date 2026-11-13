@@ -10,7 +10,7 @@
     <link href="https://googleapis.com" rel="stylesheet">
     <title>Search</title>
 </head>
-<body onload="search_sem_filtro()" class="search_main">
+<body onload="search()" class="search_main">
             <div class="button_line">
             <div class="left">
                 <a href="index.html"><img class="logo" src="img\Logo v2.png" alt="logo"><a href="Home.html"></a>
@@ -40,15 +40,16 @@
 
     function search(){
         var search = ipt_filme.value;
+        var id = sessionStorage.ID_USUARIO;
 
-        fetch("/movies/pesquisar", {
+        fetch(`/movies/buscar/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          searchServer: search,
-          filtroServer: filtro
+          idServer: id,
+          searchServer: search 
         })
       })
 
@@ -59,13 +60,14 @@
             for(let i = 0; i < json.length; i++){
                 //idFilme, path, titulo, dt_lancamento
                 let data = json[i].dt_lancamento
+                console.log(`<div class="movie_div" id="${json[i].idFilme}"> <img class="poster" src="https://image.tmdb.org/t/p/original/${json[i].path}"> <label class="movie_title">${json[i].titulo}</label> <label class="year">(${data.slice(0, 4)})</label> </div>`)
                 msg.innerHTML += `<div class="movie_div" id="${json[i].idFilme}"> <img class="poster" src="https://image.tmdb.org/t/p/original/${json[i].path}"> <label class="movie_title">${json[i].titulo}</label> <label class="year">(${data.slice(0, 4)})</label> </div>`
             }
         })
         }
         else{
             console.log(':(')
-            msg.innerHTML = ':('
+            msg.innerHTML = `<div class="movie_div" id=""> <img class="poster"> <label class="movie_title">Nenhum filme encontrado...</label> <label class="year"></label> </div>`
         }
         })
       }
